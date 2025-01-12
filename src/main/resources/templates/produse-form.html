@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head th:insert="~{/fragments :: head}"></head>
+
+<body>
+
+<!-- Top Navigation Bar -->
+<section th:insert="~{/fragments :: header}"></section>
+
+<!-- Title -->
+<div class="container-fluid">
+    <br>
+    <h3 th:text="${produs.id != null} ? 'Edit Product' : 'Add Product'"></h3>
+    <br>
+</div>
+
+<!-- Form pentru Editare/Adăugare Produs -->
+<div class="container">
+    <h4 th:text="${produs.id != null} ? 'Complete the details for editing' : 'Complete the details for adding'"></h4>
+    <form th:action="${produs.id != null} ? @{/produs/update/{id}(id=${produs.id})} : @{/produs/save(restaurantId=${restaurantId})}"
+          th:object="${produs}" method="post">
+        <div class="form-group">
+            <label for="nume">Name:</label>
+            <input type="text" id="nume" class="form-control" th:field="*{nume}" required />
+        </div>
+        <div class="form-group">
+            <label for="descriere">Description:</label>
+            <textarea id="descriere" class="form-control" th:field="*{descriere}" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="pret">Price:</label>
+            <input type="number" step="0.01" id="pret" class="form-control" th:field="*{pret}" required />
+        </div>
+        <button type="submit" class="btn btn-primary" th:text="${produs.id != null} ? 'Save' : 'Add'"></button>
+        <a th:href="@{/restaurant/{id}/produse(id=${restaurantId})}" class="btn btn-secondary">Back to Product List</a>
+    </form>
+</div>
+
+<!-- Bellow Bar -->
+<div>
+    <section th:insert="~{/fragments :: find-your-branch}"></section>
+    <footer id="footer" th:insert="~{/fragments :: footer}"></footer>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+
+<head th:insert="~{/fragments :: head}"></head>
+
+
+<body>
+
+<!--Top Navigation Bar  -->
+<section th:insert="~{/fragments :: header}"></section>
+
+
+<!--Title -->
+<div class="container-fluid ">
+    <br>
+    <h3 th:text="${title}"></h3>
+    <br>
+</div>
+
+<!--Body-->
+<section id="table-content container">
+
+    <div class="row">
+        <div class="col-md-6 offset-md-3 col-sm-10 offset-sm-1">
+
+
+            <div th:if="${param.duplicatedName}" class="alert alert-danger">
+                Error - This username already exists!
+            </div>
+            <div th:if="${param.duplicatedEmail}" class="alert alert-danger">
+                Error - This email already exists!
+            </div>
+            <div th:if="${param.error}" class="alert alert-danger">
+                AuthProvider Error - Username or email duplicated!
+            </div>
+
+            <form th:action="@{/actionRegister}" th:object="${registerRequest}" method="post" role="form">
+                <div class="form-group">
+                    <label for="firstname"> First name</label>
+                    <input  id="firstname" type="text"  th:field="*{firstname}"
+                            class="form-control" placeholder="Firstname">
+                </div>
+                <div class="form-group">
+                    <label for="lastname">Last name</label>
+                    <input id="lastname" type="text" th:field="*{lastname}"
+                           class="form-control" placeholder="Lastname" >
+                </div>
+                <div class="form-group">
+                    <label for="email">email</label>
+                    <input id="email" type="email" th:field="*{email}"
+                           class="form-control"  placeholder="exampleemail@gmail.com">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input id="password" type="password" th:field="*{password}"
+                           class="form-control"  placeholder="Password">
+                </div>
+                <br>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Register</button>
+                    <span>If you are registered, log in</span>
+                </div>
+            </form>
+
+            <br>
+            <a href="#" th:href="@{/login}" style="color:DodgerBlue;" > Already registered? Log in</a>
+            <br>
+
+        </div>
+    </div>
+
+</section>
+
+<!--Bellow Bar -->
+<div class="">
+    <section th:insert="~{/fragments :: find-your-branch}"></section>
+    <footer id="footer" th:insert="~{/fragments :: footer}"> </footer >
+</div>
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head th:insert="~{/fragments :: head}"></head>
+
+<body>
+
+<!--Top Navigation Bar  -->
+<section th:insert="~{/fragments :: header}"></section>
+
+<!--Title -->
+<div class="container-fluid ">
+    <br>
+    <h3 th:text="${title}"></h3>
+    <br>
+</div>
+
+<div
+        sec:authorize="hasAuthority('ADMIN')"
+>
+    <div class="container">
+        <div class="row">
+            <h4>List of accounts:</h4>
+            <table class="table table-light bdr">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Register Date</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Surname</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Amount of Orders</th>
+                    <th scope="col">Account Balance (RON)</th>
+                    <th scope="col">Role</th>
+                    <th scope="col">Update</th>
+                    <th scope="col">Clear</th>
+                    <th scope="col">Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="player: ${players}">
+                    <td th:text="${player.id}"></td>
+                    <td th:text="${player.registerDate}"></td>
+                    <td th:text="${player.name}"></td>
+                    <td th:text="${player.surname}"></td>
+                    <td th:text="${player.email}"></td>
+                    <td th:text="${player.amountOfOrders}"></td>
+                    <td th:text="${player.accountBalance}"></td>
+                    <td th:text="${player.role}"></td>
+                    <td>
+                        <a class="btn btn-warning btn-sm" th:href="@{/edit-player/{id}(id=${player.id})}" th:text="'Edit'"></a>
+                    </td>
+                    <td>
+                        <a class="btn btn-primary btn-sm" th:href="@{/clear/{id}(id=${player.id})}"
+                           th:text="Clear"
+                           onclick="return confirm('Are you sure you want to clear the data of this player?')">
+                        </a>
+                    </td>
+                    <td>
+                        <a class="btn btn-danger btn-sm" th:href="@{/delete-player/{id}(id=${player.id})}"
+                           th:text="Delete"
+                           onclick="return confirm('Are you sure you want to delete this player and all their data?')">
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--Bellow Bar -->
+<div>
+    <section th:insert="~{/fragments :: find-your-branch}"></section>
+    <footer id="footer" th:insert="~{/fragments :: footer}"></footer>
+</div>
+
+</body>
+</html>

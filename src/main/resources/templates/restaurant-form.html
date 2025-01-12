@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head th:insert="~{/fragments :: head}"></head>
+
+<body>
+
+<!-- Top Navigation Bar -->
+<section th:insert="~{/fragments :: header}"></section>
+
+<!-- Title -->
+<div class="container-fluid">
+    <br>
+    <h3 th:text="${restaurant.id != null} ? 'Edit Restaurant' : 'Add Restaurant'"></h3>
+    <br>
+</div>
+
+<!-- Form for Editing/Adding a Restaurant -->
+<div class="container">
+    <h4 th:text="${restaurant.id != null} ? 'Complete the details to edit' : 'Complete the details to add'"></h4>
+    <form th:action="${restaurant.id != null} ? @{/restaurant/update/{id}(id=${restaurant.id})} : @{/restaurant}"
+          th:object="${restaurant}" method="post">
+        <div class="form-group">
+            <label for="nume">Name:</label>
+            <input type="text" id="nume" class="form-control" th:field="*{nume}" required />
+        </div>
+        <div class="form-group">
+            <label for="descriere">Description:</label>
+            <textarea id="descriere" class="form-control" th:field="*{descriere}" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="adresa">Address:</label>
+            <input type="text" id="adresa" class="form-control" th:field="*{adresa}" required />
+        </div>
+        <div class="form-group">
+            <label for="imagine">Image URL:</label>
+            <input type="text" id="imagine" class="form-control" th:field="*{imagine}" />
+        </div>
+        <div class="form-group">
+            <label for="rating">Rating:</label>
+            <input type="number" step="0.1" min="0" max="5" id="rating" class="form-control" th:field="*{rating}" required />
+        </div>
+        <button type="submit" class="btn btn-primary" th:text="${restaurant.id != null} ? 'Update' : 'Add'"></button>
+        <a th:href="@{/restaurant}" class="btn btn-secondary">Back to Restaurant List</a>
+    </form>
+</div>
+
+<!-- Below Bar -->
+<div>
+    <section th:insert="~{/fragments :: find-your-branch}"></section>
+    <footer id="footer" th:insert="~{/fragments :: footer}"></footer>
+</div>
+
+</body>
+</html>

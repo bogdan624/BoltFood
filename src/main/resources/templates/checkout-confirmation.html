@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head th:insert="~{/fragments :: head}"></head>
+
+<body>
+
+<!-- Top Navigation Bar -->
+<section th:insert="~{/fragments :: header}"></section>
+
+<!-- Title -->
+<div class="container-fluid">
+    <br>
+    <h3>Order Confirmation</h3>
+    <p>Are you sure this is your complete order?</p>
+    <br>
+</div>
+
+<!-- Cart Items -->
+<div class="container">
+    <h4>Cart Items</h4>
+    <ul class="list-group">
+        <li class="list-group-item" th:each="produs : ${cartItems}">
+            <span th:text="${produs.nume}"></span> -
+            <span th:text="${produs.pret}"></span> RON
+        </li>
+    </ul>
+    <br>
+    <p><strong>Total: </strong><span th:text="${total}"></span> RON</p>
+</div>
+
+<!-- Order Confirmation Form -->
+<div class="container">
+    <form th:action="@{/orders/create}" method="post">
+        <button type="submit" class="btn btn-primary">Complete Order</button>
+    </form>
+</div>
+
+<!-- Footer Section -->
+<div>
+    <section th:insert="~{/fragments :: find-your-branch}"></section>
+    <footer id="footer" th:insert="~{/fragments :: footer}"></footer>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+/* Form Styles */
+
+form {
+    font-family: Montserrat;
+    background-color: #F9F9F9; /* Subtle background for form */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 600px;
+}
+
+form h1, form h2 {
+    font-family: Montserrat;
+    font-weight: bold;
+    color: #34BB78;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+form label {
+    font-size: 1rem;
+    color: gray;
+    display: block;
+    margin-bottom: 5px;
+}
+
+form input[type="text"],
+form input[type="number"],
+form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #BCB3B6;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-family: Montserrat;
+}
+
+form input[type="text"]:focus,
+form input[type="number"]:focus,
+form textarea:focus {
+    border-color: #34BB78;
+    outline: none;
+    box-shadow: 0px 0px 5px rgba(52, 187, 120, 0.5);
+}
+
+form button {
+    background-color: #34BB78;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #2A9B65;
+    transform: scale(1.05);
+}
+
+form .small-text {
+    font-size: 0.8rem;
+    margin: 0;
+    color: #BCB3B6;
+}
+
+form .alert-text {
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Centering forms */
+form.centered {
+    margin: auto;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+/* Form input groups */
+form .input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+form .bdr {
+    border-radius: 10px;
+    overflow: hidden;
+}

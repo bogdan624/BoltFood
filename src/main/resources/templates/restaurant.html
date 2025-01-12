@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head th:insert="~{/fragments :: head}"></head>
+
+<body>
+
+<!--Top Navigation Bar -->
+<section th:insert="~{/fragments :: header}"></section>
+
+<!--Title -->
+<div class="container-fluid">
+    <br>
+    <h3 th:text="${title}">Restaurant List</h3>
+    <br>
+</div>
+
+<!-- Restaurant List Table -->
+<div class="container">
+    <h4>Available Restaurants</h4>
+    <table class="table table-striped table-hover">
+        <thead class="table-light">
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Address</th>
+            <th>Image</th>
+            <th>Rating</th>
+            <th sec:authorize="hasAuthority('ADMIN')">Actions</th>
+        </tr>
+        </thead>
+        <tbody th:each="restaurant : ${restaurant}">
+        <tr>
+            <td>
+                <a th:href="@{/restaurant/{id}/produse(id=${restaurant.id})}" th:text="${restaurant.nume}" class="btn btn-link"></a>
+            </td>
+            <td th:text="${restaurant.descriere}"></td>
+            <td th:text="${restaurant.adresa}"></td>
+            <td><img th:src="${restaurant.imagine}" alt="Restaurant Image" width="100"/></td>
+            <td th:text="${restaurant.rating}"></td>
+            <td sec:authorize="hasAuthority('ADMIN')">
+                <a th:href="@{/restaurant/edit/{id}(id=${restaurant.id})}" class="btn btn-warning btn-sm">Edit</a>
+                <a th:href="@{/restaurant/delete/{id}(id=${restaurant.id})}" class="btn btn-danger btn-sm"
+                   onclick="return confirm('Are you sure you want to delete this restaurant?');">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Button to add a new restaurant -->
+    <a sec:authorize="hasAuthority('ADMIN')" href="/restaurant/new" class="btn btn-success">Add Restaurant</a>
+</div>
+
+<!-- Below Bar -->
+<div>
+    <section th:insert="~{/fragments :: find-your-branch}"></section>
+    <footer id="footer" th:insert="~{/fragments :: footer}"></footer>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head th:insert="~{/fragments :: head}">
+    <title>BoltFood - Home</title>
+    <meta name="description" content="BoltFood - Fast, fresh, and reliable food delivery.">
+</head>
+
+<body>
+
+<!-- Top Navigation Bar -->
+<section th:insert="~{/fragments :: header}"></section>
+
+<!-- Title Section -->
+<div class="container-fluid text-center">
+    <br>
+    <h1>Welcome to BoltFood!</h1>
+    <p>Your favorite dishes delivered fast and fresh to your doorstep.</p>
+    <br>
+</div>
+
+<!-- Authentication Section -->
+<div class="container-fluid">
+    <!-- Show this content if the user is not authenticated -->
+    <div sec:authorize="!isAuthenticated()" class="guest-content text-center">
+        <p>Hello, guest! Hungry? Create an account or log in to start ordering delicious food.</p>
+        <a class="btn btn-primary mx-2" th:href="@{/login}">Log in</a>
+        <a class="btn btn-secondary mx-2" th:href="@{/register}">Sign up</a>
+    </div>
+
+    <!-- Show this content if the user is authenticated -->
+    <div sec:authorize="isAuthenticated()" class="user-content text-center">
+        <p>Welcome back, <span th:text="${currentUser.name}"></span>!</p>
+        <p>Ready to satisfy your cravings? Browse our menu and order now!</p>
+        <a class="btn btn-success" th:href="@{/restaurant}">Explore Menu</a>
+    </div>
+</div>
+
+<!-- Featured Restaurants Section -->
+<div class="container-fluid">
+    <hr>
+    <h2 class="text-center">Our Picks for You</h2>
+    <div class="row text-center">
+        <div th:each="restaurant : ${randomRestaurants}" class="col-md-4">
+            <img th:src="@{${restaurant.imagine}}" alt="Restaurant Image" class="img-fluid restaurant-image">
+            <h4 th:text="${restaurant.nume}"></h4>
+            <p th:text="${restaurant.descriere}"></p>
+            <a class="btn btn-outline-primary" th:href="@{'/restaurant/' + ${restaurant.id} + '/produse'}">Order Now</a>
+        </div>
+    </div>
+</div>
+
+
+<!-- Why Choose BoltFood Section -->
+<div class="container-fluid mt-5">
+    <h2>Why Choose BoltFood?</h2>
+    <ul>
+        <li>Wide variety of cuisines from top-rated restaurants.</li>
+        <li>Fast and reliable delivery to your doorstep.</li>
+        <li>Exclusive discounts and deals every day.</li>
+        <li>Real-time order tracking for peace of mind.</li>
+        <li>24/7 customer support for any issues or questions.</li>
+    </ul>
+</div>
+
+<!-- Newsletter Subscription Section -->
+<div class="container-fluid text-center bg-light py-5">
+    <h3>Stay Updated!</h3>
+    <p>Subscribe to our newsletter to receive the latest updates, discounts, and offers.</p>
+    <button class="btn btn-primary" id="openModal">Subscribe</button>
+</div>
+
+<!-- Subscription Modal -->
+<div id="subscriptionModal" class="modal" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Subscribe to Our Newsletter</h5>
+                <button type="button" class="btn-close" id="closeModal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="emailInput" class="form-label">Email Address</label>
+                    <input type="email" name="email" class="form-control" id="emailInput" placeholder="Enter your email" required>
+                </div>
+                <button type="submit" class="btn btn-success w-100" id="submitSubscription">Subscribe</button>
+                <p id="modalMessage" class="mt-3" style="display: none;"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Testimonials Section -->
+<div class="container-fluid">
+    <h2 class="text-center mt-5">What Our Customers Say</h2>
+    <div class="row text-center">
+        <div class="col-md-4">
+            <blockquote>
+                <p>"BoltFood is amazing! The delivery was super fast, and the food was still hot."</p>
+                <footer>— John D.</footer>
+            </blockquote>
+        </div>
+        <div class="col-md-4">
+            <blockquote>
+                <p>"Great selection of restaurants and excellent customer service."</p>
+                <footer>— Sarah P.</footer>
+            </blockquote>
+        </div>
+        <div class="col-md-4">
+            <blockquote>
+                <p>"I love the discounts and deals they offer every week!"</p>
+                <footer>— Mike R.</footer>
+            </blockquote>
+        </div>
+    </div>
+</div>
+
+<!-- Find Your Branch Section -->
+<div>
+    <section th:insert="~{/fragments :: find-your-branch}"></section>
+</div>
+
+<!-- Footer Section -->
+<footer id="footer" th:insert="~{/fragments :: footer}"></footer>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    const openModalBtn = document.getElementById("openModal");
+    const modal = document.getElementById("subscriptionModal");
+    const closeModalBtn = document.getElementById("closeModal");
+    const submitBtn = document.getElementById("submitSubscription");
+    const modalMessage = document.getElementById("modalMessage");
+    const emailInput = document.getElementById("emailInput");
+
+    // Deschide modalul
+    openModalBtn.addEventListener("click", () => {
+        modal.style.display = "flex";
+        modalMessage.style.display = "none";
+        emailInput.value = ""; // Resetăm inputul
+    });
+
+    // Închide modalul
+    closeModalBtn.addEventListener("click", () => {
+        modal.style.display = "none";
+    });
+
+    // Trimiterea datelor pentru abonare
+    submitBtn.addEventListener("click", function () {
+        const email = emailInput.value.trim();
+
+        if (!email) {
+            modalMessage.style.display = "block";
+            modalMessage.textContent = "Please enter a valid email address.";
+            modalMessage.style.color = "red";
+            return;
+        }
+
+        fetch("/subscribe", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams({ email })
+        })
+            .then(response => response.text().then(message => ({ status: response.status, message })))
+            .then(data => {
+                modalMessage.style.display = "block";
+                modalMessage.textContent = data.message;
+
+                if (data.status === 200) {
+                    modalMessage.style.color = "green";
+                } else {
+                    modalMessage.style.color = "red";
+                }
+            })
+            .catch(() => {
+                modalMessage.style.display = "block";
+                modalMessage.textContent = "An unexpected error occurred. Please try again later.";
+                modalMessage.style.color = "red";
+            });
+    });
+
+    // Închide modalul când se face clic în afara lui
+    window.addEventListener("click", function (event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    });
+});
+
+</script>
+
+
+
+</body>
+</html>
