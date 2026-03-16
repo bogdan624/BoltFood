@@ -9,7 +9,7 @@
 - **Responsive UI:** Developed with Thymeleaf, HTML, and CSS for a seamless user experience.
 - **Database Integration:** Leverages Spring Data JPA with MySQL.
 - **API Documentation:** Provides interactive documentation via Swagger.
-- **Comprehensive Testing:** Ensures quality with JUnit and Mockito tests.
+- **Comprehensive Testing:** Ensures quality with JUnit tests.
 
 ## Technologies
 
