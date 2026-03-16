@@ -7,7 +7,7 @@
 - **RESTful API:** Implements complete CRUD operations for orders, users, and menu items.
 - **Secure Authentication:** Uses Spring Security and JWT for robust user authentication.
 - **Responsive UI:** Developed with Thymeleaf, HTML, and CSS for a seamless user experience.
-- **Database Integration:** Leverages Spring Data JPA with MySQL (with H2 for testing purposes).
+- **Database Integration:** Leverages Spring Data JPA with MySQL.
 - **API Documentation:** Provides interactive documentation via Swagger.
 - **Comprehensive Testing:** Ensures quality with JUnit and Mockito tests.
 
@@ -15,7 +15,7 @@
 
 - **Backend:** Java, Spring Boot, Spring Data JPA, Spring Security, JWT
 - **Frontend:** HTML, CSS, Thymeleaf
-- **Database:** MySQL (or H2 for testing)
+- **Database:** MySQL
 - **Build Tool:** Maven
 
 ## Getting Started
@@ -24,7 +24,7 @@
 
 - Java 22 (or a compatible version)
 - Maven
-- MySQL (if using a relational database; H2 is available for testing)
+- MySQL
 
 ### Installation
 
@@ -42,7 +42,7 @@
 
 3. **Configure the Database:**
 
-   Edit the `application.properties` (or `application.yml`) file with your MySQL credentials, or use the default settings for H2.
+   Edit the `application.properties` (or `application.yml`) file with your MySQL credentials.
 
 4. **Build and Run the Application:**
 
